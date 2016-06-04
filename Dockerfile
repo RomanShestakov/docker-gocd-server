@@ -28,6 +28,13 @@ ENV AGENT_KEY="" \
     SERVER_MEM=512m \
     SERVER_MIN_PERM_GEN=128m
 
+# modify ACL so go user would have read access
+# to /etc/hosts and /etc/resolv.conf
+# this is to avoid HostUnknown exception which happends
+# when the gocd container is used on QNAP with ContainerStation
+setfacl -m user:$USER_ID:r /etc/resolv.conf
+setfacl -m user:$USER_ID:r /etc/hosts
+
 # expose ports
 EXPOSE 8153 8154
 
