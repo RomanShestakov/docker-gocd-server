@@ -32,8 +32,8 @@ ENV AGENT_KEY="" \
 # to /etc/hosts and /etc/resolv.conf
 # this is to avoid HostUnknown exception which happends
 # when the gocd container is used on QNAP with ContainerStation
-setfacl -m user:$USER_ID:r /etc/resolv.conf
-setfacl -m user:$USER_ID:r /etc/hosts
+RUN setfacl -m user:$USER_ID:r /etc/resolv.conf
+RUN setfacl -m user:$USER_ID:r /etc/hosts
 
 # expose ports
 EXPOSE 8153 8154
