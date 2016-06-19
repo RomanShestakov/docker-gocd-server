@@ -16,7 +16,7 @@ RUN apt-get update \
 #RUN echo "deb http://http.debian.net/debian jessie-backports main" | tee /etc/apt/sources.list.d/jessie-backports.list \
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install -y openjdk-7-jre-headless
+RUN apt-get install -y openjdk-7-jre-headless acl
 
 # build time environment variables
 ENV GO_VERSION=16.5.0-3305 \
