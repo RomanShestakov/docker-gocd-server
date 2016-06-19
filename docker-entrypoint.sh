@@ -59,7 +59,10 @@ then
 fi
 
 # start go.cd server as go user
-(/bin/su - ${USER_NAME} -c "GC_LOG=$GC_LOG JVM_DEBUG=$JVM_DEBUG SERVER_MEM=$SERVER_MEM SERVER_MAX_MEM=$SERVER_MAX_MEM SERVER_MIN_PERM_GEN=$SERVER_MIN_PERM_GEN SERVER_MAX_PERM_GEN=$SERVER_MAX_PERM_GEN /usr/share/go-server/server.sh &")
+sudo -u  ${USER_NAME} GC_LOG=$GC_LOG JVM_DEBUG=$JVM_DEBUG \
+     SERVER_MEM=$SERVER_MEM SERVER_MAX_MEM=$SERVER_MAX_MEM \
+     SERVER_MIN_PERM_GEN=$SERVER_MIN_PERM_GEN SERVER_MAX_PERM_GEN=$SERVER_MAX_PERM_GEN \
+     /usr/share/go-server/server.sh &
 
 # wait until server is up and running
 until curl -s -o /dev/null 'http://localhost:8153';
@@ -72,4 +75,4 @@ if [ -n "$AGENT_KEY" ]; \
 fi; \
 
 # tail logs, to be replaced with logs that automatically go to stdout/stderr so go.cd crashing will crash the container
-/bin/su - ${USER_NAME} -c "exec tail -F /var/log/go-server/*";
+sudo -u ${USER_NAME} exec tail -F /var/log/go-server/*
