@@ -14,12 +14,9 @@ RUN apt-get update \
 
 # install dependencies
 #RUN echo "deb http://http.debian.net/debian jessie-backports main" | tee /etc/apt/sources.list.d/jessie-backports.list \
-RUN apt-get update \
-    && apt-get install -y \
-        openjdk-8-jre-headless \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
+RUN apt-get update
+RUN apt-get upgrade -y
+RUN apt-get install -y openjdk-7-jre-headless
 
 # build time environment variables
 ENV GO_VERSION=16.5.0-3305 \
