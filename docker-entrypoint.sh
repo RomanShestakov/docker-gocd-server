@@ -5,12 +5,12 @@ set -e
 groupmod -g ${GROUP_ID} ${GROUP_NAME};
 usermod -g ${GROUP_ID} -u ${USER_ID} ${USER_NAME};
 
-# modify ACL so go user would have read access
-# to /etc/hosts and /etc/resolv.conf
-# this is to avoid HostUnknown exception which happends
-# when the gocd container is used on QNAP with ContainerStation
-setfacl -m user:${USER_ID}:r /etc/resolv.conf
-setfacl -m user:${USER_ID}:r /etc/hosts
+# # modify ACL so go user would have read access
+# # to /etc/hosts and /etc/resolv.conf
+# # this is to avoid HostUnknown exception which happends
+# # when the gocd container is used on QNAP with ContainerStation
+# setfacl -m user:${USER_ID}:r /etc/resolv.conf
+# setfacl -m user:${USER_ID}:r /etc/hosts
 
 # chown directories that might have been mounted as volume and thus still have root as owner
 if [ -d "/var/lib/go-server" ];
