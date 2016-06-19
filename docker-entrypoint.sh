@@ -75,4 +75,4 @@ if [ -n "$AGENT_KEY" ]; \
 fi; \
 
 # tail logs, to be replaced with logs that automatically go to stdout/stderr so go.cd crashing will crash the container
-sudo -u ${USER_NAME} exec tail -F /var/log/go-server/*
+exec tail -F /var/log/go-server/*
