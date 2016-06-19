@@ -1,18 +1,22 @@
-FROM travix/base-debian-git-jre8:latest
+FROM kr3ssh/debian-pam
+#FROM travix/base-debian-git-jre8:latest
 
-MAINTAINER Travix
+# install dependencies
+RUN apt-get update \
+    && apt-get install -y \
+        git \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+    && git config --global core.preloadindex true \
+    && git config --global gc.auto 256
 
-RUN echo 'deb-src http://http.debian.net/debian jessie main' >> /etc/apt/sources.list
-ENV DEBIAN_FRONTEND noninteractive
-#Setup build environment for libpam
-RUN apt-get update && apt-get -y build-dep pam
-
-#Rebuild and istall libpam with --disable-audit option
-RUN export CONFIGURE_OPTS=--disable-audit \
-  && cd /root && apt-get -b source pam && dpkg -i libpam-doc*.deb libpam-modules*.deb libpam-runtime*.deb libpam0g*.deb
-
-RUN apt-get clean
-RUN rm -rf /root/pam* /root/libpam*
+# install dependencies
+RUN echo "deb http://http.debian.net/debian jessie-backports main" | tee /etc/apt/sources.list.d/jessie-backports.list \
+    && apt-get update \
+    && apt-get install -y \
+        openjdk-8-jre-headless \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # build time environment variables
 ENV GO_VERSION=16.5.0-3305 \
