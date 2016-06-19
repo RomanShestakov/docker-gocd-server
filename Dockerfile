@@ -13,8 +13,8 @@ RUN apt-get update \
     && git config --global gc.auto 256
 
 # install dependencies
-RUN echo "deb http://http.debian.net/debian jessie-backports main" | tee /etc/apt/sources.list.d/jessie-backports.list \
-    && apt-get update \
+#RUN echo "deb http://http.debian.net/debian jessie-backports main" | tee /etc/apt/sources.list.d/jessie-backports.list \
+RUN apt-get update \
     && apt-get install -y \
         openjdk-8-jre-headless \
     && apt-get clean \
