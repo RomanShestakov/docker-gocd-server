@@ -2,12 +2,16 @@ FROM travix/base-debian-git-jre8:latest
 
 MAINTAINER Travix
 
-# to fix issue with non-working su is host networking enabled
-# https://github.com/sequenceiq/docker-pam
-RUN apt-get -y build-dep pam
-#Rebuild and istall libpam with --disable-audit option
-RUN export CONFIGURE_OPTS=--disable-audit && cd /root && apt-get -b source pam \
-  && dpkg -i libpam-doc*.deb libpam-modules*.deb libpam-runtime*.deb libpam0g*.deb
+# configure PAM for user auth
+RUN apt-get update --assume-yes
+RUN apt-get --assume-yes build-dep pam
+
+#Rebuild and install libpam with --disable-audit option
+RUN apt-get install --assume-yes libpam-modules
+RUN export CONFIGURE_OPTS=--disable-audit && \
+    cd /root && \
+    apt-get -b source pam && \
+    dpkg -i libpam-doc*.deb libpam-modules*.deb libpam-runtime*.deb libpam0g*.deb
 
 # build time environment variables
 ENV GO_VERSION=16.5.0-3305 \
